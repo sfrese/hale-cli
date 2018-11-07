@@ -23,20 +23,10 @@ jobs:
     
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: gradle dependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
         
-      # run tests!
-      - run: gradle test
+      # run tests and generate coverage report
+      - run: ./gradlew clean check jacocoTestReport
+
+      # upload code coverage report
+      # ultimately code coverage token shouldn't be in ci script of course
+      - run: bash <(curl -s https://codecov.io/bash) -t 5e7cd734-0897-43b4-9963-f4710f21ec64
