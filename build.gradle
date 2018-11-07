@@ -29,6 +29,15 @@ project.ext {
 
 version = '3.5.0-SNAPSHOT'
 
+// code coverage configuration
+apply plugin: 'jacoco'
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+
 /*
  * Dependencies
  */
@@ -341,3 +350,4 @@ tasks.withType(CreateStartScripts).each { task ->
 task wrapper(type: Wrapper) {
   gradleVersion = '2.14'
 }
+
